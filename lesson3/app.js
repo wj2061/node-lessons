@@ -13,24 +13,14 @@ app.get('/', function(req, res, next){
 
 	  	var $ = cheerio.load(sres.text);
 	  	var items = [];
-	  	$('#topic_list .topic_title').each(function(idx, element){
+	  	$('#topic_list .cell').each(function(idx, element){
 	  		var $element = $(element);
+
 	  		items.push({
-	  			title: $element.attr('title'),
-	  			href: $element.attr('href')
+	  			title:  $element.find('.topic_title').attr('title'),
+	  			href:   $element.find('.topic_title').attr('href'),
+	  			author: $element.children('.user_avatar').children('img').attr('title')
 	  		});
-	  	});
-
-	  	var index = 0;
-
-	  	$('#topic_list .user_avatar').children('img').each(function(idx,element){
-	  	    var $element = $(element);
-
-	  		var tempData = items[index];
-	  		tempData['author'] = $element.attr('title');
-	  		items[index] = tempData;
-             
-            index++;
 	  	});
 
 	  	res.send(items);
