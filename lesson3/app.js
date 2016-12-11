@@ -21,6 +21,18 @@ app.get('/', function(req, res, next){
 	  		});
 	  	});
 
+	  	var index = 0;
+
+	  	$('#topic_list .user_avatar').children('img').each(function(idx,element){
+	  	    var $element = $(element);
+
+	  		var tempData = items[index];
+	  		tempData['author'] = $element.attr('title');
+	  		items[index] = tempData;
+             
+            index++;
+	  	});
+
 	  	res.send(items);
 	  });
 });
