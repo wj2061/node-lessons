@@ -23,53 +23,12 @@ superagent.get(cnodeUrl)
 	  console.log(topicUrls);
 
   	  var ep = new eventproxy();
-  	  // var epAll = new eventproxy();
-
-  	  var  size = 3;
 
   	  var result = []
 
-  	  var originalSize = topicUrls.length;
-
-  	  ep.after('bunch',Math.ceil(topicUrls.length/size), function(topicAys){
-  	  	  console.log('bunch');
-  	  	  console.log(topicAys);
-  	  });
-
   	  fetchCommentsForUrls(topicUrls, result);
 
-  	//   while(topicUrls.length > 0){
-  	//   	tempUrls = topicUrls.splice(0,size);
-
-  	//     ep.after('topic_html',tempUrls.length, function(topics){
-	  // 	   topics = topics.map(function(topicPair){
-	  // 		var topicUrl =  topicPair[0];
-	  // 		var topicHtml = topicPair[1];
-	  // 		var $ = cheerio.load(topicHtml);
-	  // 		return({
-	  // 			title: $('.topic_full_title').text().trim(),
-	  // 			href: topicUrl,
-	  // 			comment1: $('.reply_content').eq(0).text().trim(),
-	  // 		});
-	  // 	});
-
-	  // 	console.log('final:');
-	  // 	console.log(topics);
-	  //   result = result.concat(topics);
-   //      ep.emit('bunch', topics);
-
-	  // });
-
-	  // tempUrls.forEach(function(topicUrl){
-	  // 	superagent.get(topicUrl)
-	  // 	  .end(function(err, res){
-	  // 	  	console.log('fetch ' + topicUrl + ' successful');
-	  // 	  	ep.emit('topic_html', [topicUrl, res.text]);
-	  // 	  });
-	  // });
-  	 // }
-
-  });
+});
 
 function fetchCommentsForUrls(topicUrls, result){
     if (topicUrls.length == 0) {
@@ -90,6 +49,7 @@ function fetchCommentsForUrls(topicUrls, result){
 	  			title: $('.topic_full_title').text().trim(),
 	  			href: topicUrl,
 	  			comment1: $('.reply_content').eq(0).text().trim(),
+	  			score1: Number($('.big').text().replace('积分: ','')),
 	  		});
 	  	});
 
